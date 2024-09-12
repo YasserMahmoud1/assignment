@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:assignment/movie_model.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class APIService {
-  static const _apiKey = '2f8f8d6f2068c7fe7832805515f2cdbb';
+
+  static final _apiKey = dotenv.env["API_KEY"] ?? "";
 
   static Future<List<Movie>> getPopularMovies() async {
     final uri =
