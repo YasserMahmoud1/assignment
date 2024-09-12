@@ -8,10 +8,12 @@ class MovieCubit extends Cubit<MovieState> {
   void getMoviesData() async {
     emit(MovieLoading());
     final popular = await APIService.getPopularMovies();
+    final trending = await APIService.getTrendingMovies();
+    final nowInTheaters = await APIService.getNowInTheaterMovies();
     emit(MovieSuccess(
-      nowInTheatersMovies: [],
+      nowInTheatersMovies: nowInTheaters,
       popularMovies: popular,
-      trendingMovies: [],
+      trendingMovies: trending,
     ));
   }
 }
