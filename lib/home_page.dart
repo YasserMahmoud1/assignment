@@ -22,7 +22,7 @@ class MoviesView extends StatelessWidget {
               appBar: AppBar(
                 title: const Text(
                   "Movies",
-                   
+                  style: TextStyle(color: Colors.white),
                 ),
                 centerTitle: true,
                 backgroundColor: Colors.black,
@@ -49,7 +49,7 @@ class MoviesView extends StatelessWidget {
               ),
             );
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: Colors.white,));
           }
         },
       ),

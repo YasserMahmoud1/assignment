@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark(
 
       ),
-      home: MoviesView(),
+      home: const MoviesView(),
     );
   }
 }
