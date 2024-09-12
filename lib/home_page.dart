@@ -12,34 +12,47 @@ class MoviesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MovieCubit, MovieState>(
-      builder: (context, state) {
-        if (state is MovieSuccess) {
-          return Scaffold(
-            appBar: AppBar(title: const Text("Movies"), centerTitle: true),
-            body: CustomScrollView(
-              physics: const BouncingScrollPhysics(),
-              slivers: [
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      NowInTheaters(movies: state.nowInTheatersMovies,),
-                      TrendingMovies(
-                        movies: state.trendingMovies,
-                      ),
-                      PopularMovies(
-                        movies: state.popularMovies,
-                      ),
-                    ],
-                  ),
+    return BlocProvider(
+      create: (context) => MovieCubit()..getMoviesData(),
+      child: BlocBuilder<MovieCubit, MovieState>(
+        builder: (context, state) {
+          if (state is MovieSuccess) {
+            return Scaffold(
+              backgroundColor: Colors.black,
+              appBar: AppBar(
+                title: const Text(
+                  "Movies",
+                   
                 ),
-              ],
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+                centerTitle: true,
+                backgroundColor: Colors.black,
+              ),
+              body: CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        NowInTheaters(
+                          movies: state.nowInTheatersMovies,
+                        ),
+                        TrendingMovies(
+                          movies: state.trendingMovies,
+                        ),
+                        PopularMovies(
+                          movies: state.popularMovies,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
     );
   }
 }

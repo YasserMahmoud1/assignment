@@ -7,22 +7,32 @@ class APIService {
   static const _apiKey = '2f8f8d6f2068c7fe7832805515f2cdbb';
 
   static Future<List<Movie>> getPopularMovies() async {
-    final uri = Uri.https('https://api.themoviedb.org/3/movie/top_rated??api_key=$_apiKey');
+    final uri =
+        Uri.https('api.themoviedb.org', '/3/movie/top_rated',{"api_key":_apiKey} );
     final r = await http.get(uri);
     final response = jsonDecode(r.body) as Map<String, dynamic>;
-    return response["results"].map<Movie>((movie) => Movie.fromJSON(movie)).toList();
-  }
-  static Future<List<Movie>> getTrendingMovies() async {
-    final uri = Uri.https('https://api.themoviedb.org/3/trending/movie/week?api_key=$_apiKey');
-    final r = await http.get(uri);
-    final response = jsonDecode(r.body) as Map<String, dynamic>;
-    return response["results"].map<Movie>((movie) => Movie.fromJSON(movie)).toList();
-  }
-  static Future<List<Movie>> getNowInTheaterMovies() async {
-    final uri = Uri.https('https://api.themoviedb.org/3/movie/now_playing?api_key=$_apiKey');
-    final r = await http.get(uri);
-    final response = jsonDecode(r.body) as Map<String, dynamic>;
-    return response["results"].map<Movie>((movie) => Movie.fromJSON(movie)).toList();
+    return response["results"]
+        .map<Movie>((movie) => Movie.fromJSON(movie))
+        .toList();
   }
 
+  static Future<List<Movie>> getTrendingMovies() async {
+    final uri = Uri.https(
+        'api.themoviedb.org', '/3/trending/movie/week',{"api_key":_apiKey});
+    final r = await http.get(uri);
+    final response = jsonDecode(r.body) as Map<String, dynamic>;
+    return response["results"]
+        .map<Movie>((movie) => Movie.fromJSON(movie))
+        .toList();
+  }
+
+  static Future<List<Movie>> getNowInTheaterMovies() async {
+    final uri = Uri.https(
+        'api.themoviedb.org', '/3/movie/now_playing', {"api_key": _apiKey});
+    final r = await http.get(uri);
+    final response = jsonDecode(r.body) as Map<String, dynamic>;
+    return response["results"]
+        .map<Movie>((movie) => Movie.fromJSON(movie))
+        .toList();
+  }
 }
