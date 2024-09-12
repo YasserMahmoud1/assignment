@@ -8,15 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'popularMovies.dart';
 
 class MoviesView extends StatelessWidget {
-  const MoviesView({Key? key}) : super(key: key);
+  const MoviesView({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MovieCubit, MovieState>(
       builder: (context, state) {
-        if (state is MovieLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else {
+        if (state is MovieSuccess) {
           return Scaffold(
             appBar: AppBar(title: const Text("Movies"), centerTitle: true),
             body: CustomScrollView(
@@ -25,15 +23,21 @@ class MoviesView extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      const NowInTheaters(),
-                      const TrendingMovies(),
-                      const PopularMovies(),
+                      NowInTheaters(movies: state.nowInTheatersMovies,),
+                      TrendingMovies(
+                        movies: state.trendingMovies,
+                      ),
+                      PopularMovies(
+                        movies: state.popularMovies,
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
           );
+        } else {
+          return const Center(child: CircularProgressIndicator());
         }
       },
     );
